@@ -36,7 +36,11 @@ void loop() {
   // Check if motion is detected within 30cm
   if (distance <= 30) {
     rotateServo();
-    delay(2000); // Wait for the servo motor to complete its rotation
+    while (distance <= 30) {
+      // Wait for the motion to go away before allowing another rotation
+      duration = pulseIn(echoPin, HIGH);
+      distance = (duration / 2) / 29.1;
+    }
   }
 }
 
